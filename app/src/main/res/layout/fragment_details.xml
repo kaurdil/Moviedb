@@ -1,14 +1,353 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.DetailsFragment">
+    tools:context=".ui.fragments.DetailsFragment"
+    tools:ignore="ExtraText">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:id="@+id/layoutTop"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="details" />
+        android:layout_height="300dp">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/backimg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/starwars"></ImageView>
+
+        <ImageView
+            android:id="@+id/detailsback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="25dp"
+            android:src="@drawable/back"></ImageView>
+
+    </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="520dp"
+        android:layout_marginTop="200dp">
+
+           <RelativeLayout
+               android:id="@+id/layoutBottom"
+               android:layout_width="match_parent"
+               android:layout_height="520dp"
+               android:layout_alignParentBottom="true"
+               android:background="@drawable/big_card">
+
+               <TextView
+                   android:id="@+id/titleTxt"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="230dp"
+                   android:layout_marginTop="10dp"
+                   android:text="title"
+                   android:textColor="@color/text_color"
+                   android:textSize="20sp"
+                   android:textStyle="bold">
+
+               </TextView>
+
+               <TextView
+                   android:id="@+id/dateTxt"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="210dp"
+                   android:layout_marginTop="35dp"
+                   android:text="23-8-1998"
+                   android:textColor="@color/text_color"
+                   android:textSize="20sp"
+                   android:textStyle="bold">
+
+               </TextView>
+
+               <RatingBar
+                   android:id="@+id/ratingBar"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="140dp"
+                   android:layout_marginTop="60dp"
+                   android:progressTint="#FFD700"></RatingBar>
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="20dp"
+                   android:layout_marginTop="150dp"
+                   android:text="Genre:"
+                   android:textColor="@color/text_color"
+                   android:textSize="20sp"
+                   android:textStyle="bold">
+
+               </TextView>
+
+               <TextView
+                   android:id="@+id/genreval"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="120dp"
+                   android:layout_marginTop="150dp"
+                   android:textColor="@color/text_color"
+                   android:textSize="20sp">
+
+               </TextView>
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="20dp"
+                   android:layout_marginTop="180dp"
+                   android:text="Language:"
+                   android:textColor="@color/text_color"
+                   android:textSize="20sp"
+
+                   android:textStyle="bold"></TextView>
+
+               <TextView
+                   android:id="@+id/languageVal"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="120dp"
+                   android:layout_marginTop="180dp"
+                   android:textColor="@color/text_color"
+                   android:textSize="20sp">
+
+               </TextView>
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="20dp"
+                   android:layout_marginTop="210dp"
+                   android:text="Adult:"
+                   android:textColor="@color/text_color"
+                   android:textSize="20sp"
+                   android:textStyle="bold">
+
+               </TextView>
+
+               <TextView
+                   android:id="@+id/adval"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="120dp"
+                   android:layout_marginTop="210dp"
+                   android:textColor="@color/text_color"
+                   android:textSize="20sp">
+
+               </TextView>
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="20dp"
+                   android:layout_marginTop="240dp"
+                   android:text="Overview:"
+                   android:textColor="@color/text_color"
+                   android:textSize="20sp"
+                   android:textStyle="bold"
+
+                   ></TextView>
+
+               <TextView
+                   android:id="@+id/overtext"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="20dp"
+                   android:layout_marginTop="260dp"
+                   android:textColor="@color/text_color"
+                   android:textSize="20sp">
+
+               </TextView>
+
+
+           </RelativeLayout>
+    </ScrollView>
+
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="100dp"
+        android:layout_height="255dp"
+        android:layout_above="@id/layoutBottom"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="-133dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/starwars"
+        tools:ignore="NotSibling" />
+
+
+
+
+  </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

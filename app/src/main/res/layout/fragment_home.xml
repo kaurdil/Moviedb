@@ -1,85 +1,84 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.HomeFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    tools:context=".MainActivity">
+    <RelativeLayout
+        android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="4"
-        android:background="@color/background_color">
+        >
+
+        <ImageView
+            android:id="@+id/imgb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/blurimg"/>
+
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.65"
-            android:background="@drawable/card_background"
-            >
+            android:layout_height="match_parent"
+            android:background="@drawable/back_shape">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+            <androidx.appcompat.widget.SearchView
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/glassearch"
+                android:text="search">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/ptbolditalic"
-                    android:text="Muvys"
-                    android:layout_marginTop="46dp"
-                    android:layout_marginLeft="26dp"
-                    android:textColor="@color/white"
-                    android:textSize="36dp">
+            </androidx.appcompat.widget.SearchView>
 
-                </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="180dp"
+                android:fontFamily="@font/ptbold"
+                android:text="My Collection"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:textStyle="bold"></TextView>
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="180dp"
-                    android:layout_marginTop="46dp"
-                    android:src="@drawable/search">
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnadd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="end|bottom"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/add"
+                android:backgroundTint="#000"
+                android:tint="#FFFFFF"
+                app:rippleColor="@color/white" />
 
-                </ImageView>
-
-            </LinearLayout>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3.35"
-            android:background="@color/background_color">
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-               <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/btnAddMovie"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="24dp"
-                    app:backgroundTint="@color/widget_color"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/plus"
-                    app:layout_constraintEnd_toEndOf="parent">
-
-                </com.google.android.material.floatingactionbutton.FloatingActionButton>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycle_Movies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="250dp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:paddingBottom="20dp"
+                android:scrollbarStyle="outsideOverlay" />
 
         </RelativeLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
-</FrameLayout>
+
+
+
+</RelativeLayout>

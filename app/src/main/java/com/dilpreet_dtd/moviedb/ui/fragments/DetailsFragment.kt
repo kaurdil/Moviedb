@@ -1,60 +1,71 @@
 package com.dilpreet_dtd.moviedb.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.dilpreet_dtd.moviedb.R
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
+import androidx.navigation.Navigation
+import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
+import com.dilpreet_dtd.moviedb.ViewModel.movieViewModel
+import com.dilpreet_dtd.moviedb.databinding.FragmentDetailsBinding
+import com.dilpreet_dtd.moviedb.databinding.FragmentHomeBinding
+import com.dilpreet_dtd.moviedb.model.Genre
+import com.dilpreet_dtd.moviedb.model.Movie
+import com.dilpreet_dtd.moviedb.ui.Adapters.MovieAdapter
+import android.R
+import android.widget.ImageView
+import androidx.activity.OnBackPressedDispatcher
+import com.bumptech.glide.request.RequestOptions
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import jp.wasabeef.glide.transformations.BlurTransformation
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+import com.bumptech.glide.request.RequestOptions.bitmapTransform
+
+
 class DetailsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    lateinit var binding: FragmentDetailsBinding
+    val viewModel: movieViewModel by viewModels()
+    var mymovie: Movie? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_details, container, false)
+        binding = FragmentDetailsBinding.inflate(layoutInflater, container, false)
+        //receiving data using bundle
+        val args = this.arguments
+        mymovie = args?.getParcelable<Movie>("movie")
+        binding.titleTxt.text = mymovie?.title.toString()
+        Glide.with(requireContext()).load(mymovie?.movieImg).into(binding.img)
+        Glide.with(requireContext())
+            .load(mymovie?.movieImg)
+            .apply(bitmapTransform(BlurTransformation(25, 3)))
+            .into(binding.backimg)
+        binding.dateTxt.text = mymovie?.releaseDate.toString()
+        binding.ratingBar.rating = mymovie?.popularity?.toFloat() as (Float)
+        val gen = mymovie?.genre?.iterator()
+        var genrelist: String = ""
+        if (gen != null) {
+            for (values in gen) {
+                genrelist += values.name + " "
+            }
+        }
+        binding.genreval.text = genrelist
+        binding.languageVal.text = mymovie?.language
+        binding.adval.text = mymovie?.adult
+        binding.overtext.text = mymovie?.overview
+        binding.detailsback.setOnClickListener {
+            activity?.onBackPressed()
+        }
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DetailsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
+
 }
+
