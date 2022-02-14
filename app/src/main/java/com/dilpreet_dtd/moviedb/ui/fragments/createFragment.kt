@@ -1,15 +1,15 @@
 package com.dilpreet_dtd.moviedb.ui.fragments
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.CompoundButton
-import android.widget.RatingBar
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
@@ -30,8 +30,9 @@ class createFragment : Fragment(), RatingBar.OnRatingBarChangeListener,
     lateinit var genrelist: List<Genre>
     val viewModel: movieViewModel by viewModels()
     val movie = Movie()
-    private val args: createFragmentArgs by navArgs()
+    private val args:createFragmentArgs by navArgs()
     var currentMovie: Movie? = null
+    var checkcounter=1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,6 +64,11 @@ class createFragment : Fragment(), RatingBar.OnRatingBarChangeListener,
             }
             if (binding.overviewTxt.text.toString().isNullOrEmpty()) {
                 binding.overviewTxt.setError("Overview required")
+                return@setOnClickListener
+            }
+            if(movie.genre.isNullOrEmpty()){
+                binding.errorTxt.text="Plz select at least one genre!!"
+                binding.errorTxt.setTextColor(Color.parseColor("#FF0000"))
                 return@setOnClickListener
             }
 
@@ -136,20 +142,22 @@ class createFragment : Fragment(), RatingBar.OnRatingBarChangeListener,
 
         listofgenre.forEach {genre->
             val checkbox = CheckBox(context)
-
-
             checkbox.setOnCheckedChangeListener(this)
+            checkbox.buttonTintList = ColorStateList.valueOf(Color.parseColor("#3e4554"));
             checkbox.text = genre.name
             currentMovie?.genre?.find {it.name==genre.name}?.let {
                 checkbox.isChecked = true
             }
             binding.checkboxLinear.addView(checkbox)
+
+
         }
 
     }
 
+
     fun validateDate(date: String): Boolean {
-        val regex = "^(0[0-9]||1[0-2])-([0-2][0-9]||3[0-1])-([0-9][0-9])?[0-9][0-9]$"
+        val regex = "^([0-2][0-9]||3[0-1])-(0[0-9]||1[0-2])-([0-9][0-9])?[0-9][0-9]$"
         val matcher = Pattern.compile(regex).matcher(date)
         if (matcher.matches()) {
             return true
@@ -197,6 +205,8 @@ class createFragment : Fragment(), RatingBar.OnRatingBarChangeListener,
             movie.genre?.filterTo(newlist, { it.name != p0?.text.toString() })
             movie.genre = newlist
         }
+
+
 
     }
 }

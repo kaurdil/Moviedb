@@ -13,6 +13,6 @@ class splashscreen : AppCompatActivity() {
         supportActionBar?.hide()
         Handler(Looper.getMainLooper()).postDelayed({
             startActivity(Intent(this,MainActivity::class.java))
-        },5000)
+        },2000)
     }
 }

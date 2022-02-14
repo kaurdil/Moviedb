@@ -20,6 +20,7 @@ import com.dilpreet_dtd.moviedb.ui.Adapters.MovieAdapter
 import android.R
 import android.widget.ImageView
 import androidx.activity.OnBackPressedDispatcher
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.request.RequestOptions
 
 import jp.wasabeef.glide.transformations.BlurTransformation
@@ -30,6 +31,7 @@ import com.bumptech.glide.request.RequestOptions.bitmapTransform
 class DetailsFragment : Fragment() {
     lateinit var binding: FragmentDetailsBinding
     val viewModel: movieViewModel by viewModels()
+    private val safeArg:DetailsFragmentArgs by navArgs()
     var mymovie: Movie? = null
 
     override fun onCreateView(
@@ -37,28 +39,27 @@ class DetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentDetailsBinding.inflate(layoutInflater, container, false)
-        //receiving data using bundle
-        val args = this.arguments
-        mymovie = args?.getParcelable<Movie>("movie")
-        binding.titleTxt.text = mymovie?.title.toString()
-        Glide.with(requireContext()).load(mymovie?.movieImg).into(binding.img)
+        //receiving data using safeArgs
+        val args = safeArg.data
+        binding.titleTxt.text = args?.title.toString()
+        Glide.with(requireContext()).load(args?.movieImg).into(binding.img)
         Glide.with(requireContext())
-            .load(mymovie?.movieImg)
+            .load(args?.movieImg)
             .apply(bitmapTransform(BlurTransformation(25, 3)))
             .into(binding.backimg)
-        binding.dateTxt.text = mymovie?.releaseDate.toString()
-        binding.ratingBar.rating = mymovie?.popularity?.toFloat() as (Float)
-        val gen = mymovie?.genre?.iterator()
+        binding.dateTxt.text = args?.releaseDate.toString()
+        binding.ratingBar.rating = args?.popularity?.toFloat() as (Float)
+        val gen = args?.genre?.iterator()
         var genrelist: String = ""
         if (gen != null) {
             for (values in gen) {
-                genrelist += values.name + " "
+                genrelist += values.name+" "
             }
         }
         binding.genreval.text = genrelist
-        binding.languageVal.text = mymovie?.language
-        binding.adval.text = mymovie?.adult
-        binding.overtext.text = mymovie?.overview
+        binding.languageVal.text = args?.language
+        binding.adval.text = args?.adult
+        binding.overtext.text = args?.overview
         binding.detailsback.setOnClickListener {
             activity?.onBackPressed()
         }

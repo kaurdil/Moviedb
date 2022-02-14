@@ -17,8 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/blurimg"/>
+            android:scaleType="fitXY"/>
 
 
         <RelativeLayout
@@ -26,7 +25,8 @@
             android:layout_height="match_parent"
             android:background="@drawable/back_shape">
 
-            <androidx.appcompat.widget.SearchView
+            <SearchView
+                android:id="@+id/searchtext"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -34,18 +34,17 @@
                 android:background="@drawable/glassearch"
                 android:text="search">
 
-            </androidx.appcompat.widget.SearchView>
+            </SearchView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="180dp"
-                android:fontFamily="@font/ptbold"
+                android:fontFamily="@font/rubik_medium"
                 android:text="My Collection"
                 android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                android:textStyle="bold"></TextView>
+                android:textSize="24sp"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnadd"
@@ -58,10 +57,10 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:src="@drawable/add"
-                android:backgroundTint="#000"
-                android:tint="#FFFFFF"
-                app:rippleColor="@color/white" />
+                android:backgroundTint="@color/heading_text_color"
+                android:src="@drawable/ic_add"
+                app:tint="#FFFFFF"
+                app:maxImageSize="35dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycle_Movies"

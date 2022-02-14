@@ -3,22 +3,23 @@ package com.dilpreet_dtd.moviedb.model
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.*
+import com.google.gson.annotations.SerializedName
 
 
 @Entity(tableName = "Movie")
 
 data class Movie(
     @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
+    @SerializedName("id")  var id: Int? = null
 ) : Parcelable {
-    var title: String? = ""
-    var releaseDate: String? = ""
-    var language: String? = ""
-    var genre: MutableList<Genre>? = null
+    @SerializedName("title") var title: String? = ""
+    @SerializedName("release_date") var releaseDate: String? = ""
+    @SerializedName( "original_language")var language: String? = ""
+    @SerializedName("genres")var genre: MutableList<Genre>? = null
     var adult: String? = ""
-    var popularity: String? = ""
-    var movieImg: String? = ""
-    var overview: String? = ""
+    @SerializedName("vote_average")var popularity: String? = ""
+    @SerializedName("poster_path")  var movieImg: String? = ""
+    @SerializedName("overview")var overview: String? = ""
 
     constructor(parcel: Parcel) : this(parcel.readValue(Int::class.java.classLoader) as? Int) {
         title = parcel.readString()

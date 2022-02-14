@@ -10,6 +10,8 @@ import android.widget.AdapterView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dilpreet_dtd.moviedb.R
@@ -36,7 +38,6 @@ class MovieAdapter(
         }
 
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): movieViewHolder {
         return movieViewHolder(
@@ -73,25 +74,37 @@ class MovieAdapter(
                     android.R.string.no, Toast.LENGTH_SHORT
                 ).show()
             }
-
+            
             builder.show()
             false
         }
        holder.binding.root.setOnClickListener {
-           eventlistener.onMovieClicked(data)
+           val action=HomeFragmentDirections.actionHomeFragmentToDetailsFragment(data)
+           Navigation.findNavController(it).navigate(action)
        }
         holder.binding.edit.setOnClickListener{
             val action=HomeFragmentDirections.actionHomeFragmentToCreateFragment(data)
             Navigation.findNavController(it).navigate(action)
         }
 
+
     }
 
     override fun getItemCount() = movieList.size
     interface MovieAdapterEventListener {
         fun deleteItem(movie: Movie, delete: Boolean)
-        fun onMovieClicked(movie:Movie)
     }
+    private val differCallback=object : DiffUtil.ItemCallback<Movie>(){
+        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem.id==newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem==newItem
+        }
+
+    }
+   val differ=AsyncListDiffer(this,differCallback)
 
 
 }

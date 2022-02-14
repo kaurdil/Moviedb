@@ -15,9 +15,6 @@ interface movieDao {
     @Query("Delete From Movie where id=:id")
     fun deleteMovie(id:Int)
 
-    @Query("SELECT * FROM Movie WHERE id=:id ")
-    fun loadSingle(id: Int): LiveData<Movie>
-
     @Update
     fun updateMovie(movie:Movie)
 }
