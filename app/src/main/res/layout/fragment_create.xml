@@ -27,13 +27,13 @@
         </ImageView>
 
         <TextView
+            android:id="@+id/createTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/rubik_medium"
             android:gravity="left"
             android:padding="10dp"
             android:textStyle="bold"
-            android:text="Add Movie"
             android:textColor="#FFF"
             android:textSize="28sp">
 
@@ -333,7 +333,7 @@
                 android:layout_margin="20dp"
                 android:padding="10dp"
                 android:background="@drawable/round_btn"
-                android:text="Create"
+                android:text=""
                 android:textColor="#FFFF"
                 android:textSize="20sp"
                 app:layout_constraintTop_toBottomOf="@+id/overview_txt">

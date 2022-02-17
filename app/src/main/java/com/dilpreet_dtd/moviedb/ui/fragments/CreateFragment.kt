@@ -18,6 +18,9 @@ import com.dilpreet_dtd.moviedb.ViewModel.movieViewModel
 import com.dilpreet_dtd.moviedb.databinding.FragmentCreateBinding
 import com.dilpreet_dtd.moviedb.model.Genre
 import com.dilpreet_dtd.moviedb.model.Movie
+import com.dilpreet_dtd.moviedb.util.DataUtil
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import java.util.regex.Pattern
 
 
@@ -30,9 +33,10 @@ class createFragment : Fragment(), RatingBar.OnRatingBarChangeListener,
     lateinit var genrelist: List<Genre>
     val viewModel: movieViewModel by viewModels()
     val movie = Movie()
-    private val args:createFragmentArgs by navArgs()
+    private val args: createFragmentArgs by navArgs()
     var currentMovie: Movie? = null
-    var checkcounter=1
+    var checkcounter = 1
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,32 +46,39 @@ class createFragment : Fragment(), RatingBar.OnRatingBarChangeListener,
         binding.back.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_createFragment_to_homeFragment)
         }
+        if (args.data == null) {
+            binding.createTitle.text = "Add Movie"
+            binding.btnSave.text = "CREATE"
+        } else {
+            binding.createTitle.text ="Edit Movie"
+            binding.btnSave.text="EDIT"
+        }
         binding.btnSave.setOnClickListener {
             //form validation before saving
             if (binding.names.text.isNullOrEmpty()) {
-                binding.names.setError("Title required")
+                binding.names.error = "Title required"
                 return@setOnClickListener
             }
             if (!validateDate(binding.dateTxt.text.toString()) || binding.dateTxt.text.toString()
                     .isNullOrEmpty()
             ) {
-                binding.dateTxt.setError("Incorrect Date")
+                binding.dateTxt.error = "Incorrect Date"
                 return@setOnClickListener
             }
             if (binding.imgUrl.text.toString().isNullOrEmpty()) {
-                binding.imgUrl.setError("Url required")
+                binding.imgUrl.error = "Url required"
                 return@setOnClickListener
             }
             if (binding.langTxt.text.isNullOrEmpty()) {
-                binding.langTxt.setError("Language required")
+                binding.langTxt.error = "Language required"
                 return@setOnClickListener
             }
             if (binding.overviewTxt.text.toString().isNullOrEmpty()) {
-                binding.overviewTxt.setError("Overview required")
+                binding.overviewTxt.error = "Overview required"
                 return@setOnClickListener
             }
-            if(movie.genre.isNullOrEmpty()){
-                binding.errorTxt.text="Plz select at least one genre!!"
+            if (movie.genre.isNullOrEmpty()) {
+                binding.errorTxt.text = "Plz select at least one genre!!"
                 binding.errorTxt.setTextColor(Color.parseColor("#FF0000"))
                 return@setOnClickListener
             }
@@ -76,11 +87,8 @@ class createFragment : Fragment(), RatingBar.OnRatingBarChangeListener,
                 createMovie()
             } else {
                 updateMovie(it)
-
             }
-
         }
-
         return binding.root
     }
 
@@ -130,7 +138,7 @@ class createFragment : Fragment(), RatingBar.OnRatingBarChangeListener,
 
             }
         }
-        populategenrelist(getgenres())
+        populategenrelist(DataUtil.getgenres())
     }
 
     override fun onRatingChanged(p0: RatingBar?, p1: Float, p2: Boolean) {
@@ -138,14 +146,15 @@ class createFragment : Fragment(), RatingBar.OnRatingBarChangeListener,
     }
 
 
-    fun populategenrelist(listofgenre: List<Genre>) {
+    private fun populategenrelist(listofgenre: List<Genre>) {
 
-        listofgenre.forEach {genre->
+        listofgenre.forEach { genre ->
             val checkbox = CheckBox(context)
+            checkbox.tag=genre.id
             checkbox.setOnCheckedChangeListener(this)
             checkbox.buttonTintList = ColorStateList.valueOf(Color.parseColor("#3e4554"));
             checkbox.text = genre.name
-            currentMovie?.genre?.find {it.name==genre.name}?.let {
+            currentMovie?.genre?.find { it == genre.id }?.let {
                 checkbox.isChecked = true
             }
             binding.checkboxLinear.addView(checkbox)
@@ -156,7 +165,7 @@ class createFragment : Fragment(), RatingBar.OnRatingBarChangeListener,
     }
 
 
-    fun validateDate(date: String): Boolean {
+    private fun validateDate(date: String): Boolean {
         val regex = "^([0-2][0-9]||3[0-1])-(0[0-9]||1[0-2])-([0-9][0-9])?[0-9][0-9]$"
         val matcher = Pattern.compile(regex).matcher(date)
         if (matcher.matches()) {
@@ -184,28 +193,18 @@ class createFragment : Fragment(), RatingBar.OnRatingBarChangeListener,
 
     }
 
-    fun getgenres(): List<Genre> {
-        return listOf(
-            Genre(1, "Comedy"),
-            Genre(2, "Action"),
-            Genre(3, "Drama"),
-            Genre(4, "Horror"),
-            Genre(5, "Romance")
-        )
-    }
 
     override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
         if (movie.genre.isNullOrEmpty()) {
             movie.genre = arrayListOf()
         }
         if (p1) {
-            movie.genre?.add(Genre(null, p0?.text.toString()))
+            movie.genre?.add(p0?.tag.toString().toInt())
         } else {
-            val newlist = arrayListOf<Genre>()
-            movie.genre?.filterTo(newlist, { it.name != p0?.text.toString() })
+            val newlist = arrayListOf<Int>()
+            movie.genre?.filterTo(newlist, { it != p0?.id })
             movie.genre = newlist
         }
-
 
 
     }

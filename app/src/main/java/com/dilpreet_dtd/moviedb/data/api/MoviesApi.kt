@@ -1,6 +1,5 @@
-package com.dilpreet_dtd.moviedb.api
+package com.dilpreet_dtd.moviedb.data.api
 
-import com.dilpreet_dtd.moviedb.model.Movie
 import com.dilpreet_dtd.moviedb.model.MoviesResponse
 import com.dilpreet_dtd.moviedb.util.Constants.Companion.API_KEY
 import retrofit2.Response

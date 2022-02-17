@@ -20,6 +20,7 @@ import com.dilpreet_dtd.moviedb.model.Movie
 import com.dilpreet_dtd.moviedb.ui.fragments.DetailsFragment
 import com.dilpreet_dtd.moviedb.ui.fragments.HomeFragment
 import com.dilpreet_dtd.moviedb.ui.fragments.HomeFragmentDirections
+import com.dilpreet_dtd.moviedb.util.loadImage
 import kotlinx.coroutines.NonDisposableHandle.parent
 
 class MovieAdapter(
@@ -54,7 +55,7 @@ class MovieAdapter(
         holder.binding.cardTitle.text = data.title
         holder.binding.cardDate.text = data.releaseDate
         holder.binding.cardRatingbar.rating = data.popularity?.toFloat() as (Float)
-        Glide.with(requireContext).load(data.movieImg).into(holder.binding.cardimg)
+        holder.binding.cardimg.loadImage(data.movieImg,false)
         holder.binding.root.setOnLongClickListener {
             val builder = AlertDialog.Builder(requireContext)
             builder.setTitle("Delete")

@@ -1,4 +1,4 @@
-package com.dilpreet_dtd.moviedb.api
+package com.dilpreet_dtd.moviedb.data.api
 
 import com.dilpreet_dtd.moviedb.util.Constants.Companion.BASE_URL
 import com.facebook.stetho.okhttp3.StethoInterceptor

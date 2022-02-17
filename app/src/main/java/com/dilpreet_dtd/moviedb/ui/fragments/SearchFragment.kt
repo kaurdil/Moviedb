@@ -12,15 +12,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dilpreet_dtd.moviedb.R
 import com.dilpreet_dtd.moviedb.ViewModel.movieViewModel
 import com.dilpreet_dtd.moviedb.databinding.FragmentSearchBinding
+import com.dilpreet_dtd.moviedb.model.Genre
+import com.dilpreet_dtd.moviedb.model.Movie
 import com.dilpreet_dtd.moviedb.ui.Adapters.MovieAdapter
+import com.dilpreet_dtd.moviedb.ui.Adapters.searchAdapter
 import com.dilpreet_dtd.moviedb.util.Resource
+import java.util.Observer
 
 
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment() ,searchAdapter.SearchAdapterEventListener{
 
     lateinit var binding: FragmentSearchBinding
     val viewModel: movieViewModel by viewModels()
-    lateinit var adapter: MovieAdapter
+    lateinit var adapter: searchAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,26 +33,14 @@ class SearchFragment : Fragment() {
 
         // Inflate the layout for this fragment
         binding = FragmentSearchBinding.inflate(layoutInflater, container, false)
-//        binding.searchedit.addTextChangedListener{ editable->
-//                   if(editable.toString().isNotEmpty()){
-//                       viewModel.getSearchMovies(editable.toString())
-//                       Log.d("search",editable.toString())
-//           }
-//
-//        }
 
-       binding.searchview.setOnQueryTextListener(object:SearchView.OnQueryTextListener{
-           override fun onQueryTextSubmit(p0: String?): Boolean {
-               return true
-           }
+        return binding.root
+    }
 
-           override fun onQueryTextChange(p0: String?): Boolean {
-               p0
-               return true
-           }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-       })
-        viewModel.searchMovies.observe(viewLifecycleOwner, { response ->
+        viewModel.searchMovies.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Success -> {
                     response.data?.let { moviesResponse ->
@@ -59,12 +51,10 @@ class SearchFragment : Fragment() {
                                 false
                             )
                         Log.d("res", moviesResponse.movies.toString())
-                        binding.searchRcv.adapter = MovieAdapter(
-                            requireContext(),
-                            moviesResponse.movies,
-                            adapter.eventlistener
+                        adapter = searchAdapter(
+                            moviesResponse.movies,this
                         )
-
+                        binding.searchRcv.adapter=adapter
                     }
                 }
                 is Resource.Error -> {
@@ -76,8 +66,30 @@ class SearchFragment : Fragment() {
 
             }
 
+        }
+        binding.searchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                p0?.let {
+                    if (it.length > 2) {
+                        viewModel.getSearchMovies(it)
+                    }
+                }
+                return true
+            }
         })
-        return inflater.inflate(R.layout.fragment_search, container, false)
+        binding.back.setOnClickListener {
+            activity?.onBackPressed()
+        }
+
+
+    }
+
+    override fun saveItem(movie: Movie) {
+        viewModel.addMovie(movie)
     }
 
 

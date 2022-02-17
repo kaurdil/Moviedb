@@ -34,7 +34,7 @@
         android:id="@+id/createFragment"
         android:name="com.dilpreet_dtd.moviedb.ui.fragments.createFragment"
         android:label="fragment_create"
-        tools:layout="@layout/fragment_create" >
+        tools:layout="@layout/fragment_create">
         <action
             android:id="@+id/action_createFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -48,5 +48,9 @@
         android:id="@+id/searchFragment"
         android:name="com.dilpreet_dtd.moviedb.ui.fragments.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
 </navigation>

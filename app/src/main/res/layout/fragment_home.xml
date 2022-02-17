@@ -25,16 +25,29 @@
             android:layout_height="match_parent"
             android:background="@drawable/back_shape">
 
-            <SearchView
+            <LinearLayout
                 android:id="@+id/searchtext"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="50dp"
-                android:background="@drawable/glassearch"
-                android:text="search">
+                android:padding="5dp"
+                android:orientation="horizontal"
+                android:background="@drawable/glassearch">
 
-            </SearchView>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@android:drawable/ic_menu_search"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="search"
+                    android:layout_gravity="center"
+
+                    />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -44,7 +57,7 @@
                 android:fontFamily="@font/rubik_medium"
                 android:text="My Collection"
                 android:textColor="#FFFFFF"
-                android:textSize="24sp"/>
+                android:textSize="24sp" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnadd"

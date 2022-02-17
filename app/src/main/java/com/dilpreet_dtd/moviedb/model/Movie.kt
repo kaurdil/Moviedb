@@ -15,7 +15,7 @@ data class Movie(
     @SerializedName("title") var title: String? = ""
     @SerializedName("release_date") var releaseDate: String? = ""
     @SerializedName( "original_language")var language: String? = ""
-    @SerializedName("genres")var genre: MutableList<Genre>? = null
+    @SerializedName("genre_ids")var genre: MutableList<Int>? = null
     var adult: String? = ""
     @SerializedName("vote_average")var popularity: String? = ""
     @SerializedName("poster_path")  var movieImg: String? = ""
